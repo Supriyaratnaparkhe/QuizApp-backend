@@ -49,7 +49,9 @@ router.post("/createQuiz/:userId", authenticate, async (req, res) => {
   try {
     const { userId } = req.params;
     const { quizName, questions, quizType } = req.body;
-
+    if (!quizName || !quizType) {
+      return res.status(400).json({ error: 'Quiz Name and QuizType are required fields.' });
+    }
     const newQuiz = new Quiz({
       userId,
       quizName,
