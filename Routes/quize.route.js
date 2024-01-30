@@ -121,21 +121,28 @@ router.get("/:quizId", async (req, res) => {
     if (!quiz) {
       return res.status(404).json({ message: "Quiz not found" });
     }
-
-    // Increment the impression field by 1
-    quiz.impression += 1;
-
-    // Save the updated quiz back to the database
-    await quiz.save();
-
-    // Send a response indicating success
     res.status(200).json({ quiz });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+router.put("/impression/:quizId", async(req,res)=>{
+  try {
+    // Find the quiz by its ID
+    const { quizId } = req.params;
+    const quiz = await Quiz.findById(quizId);
 
+    if (!quiz) {
+      return res.status(404).json({ message: "Quiz not found" });
+    }
+    quiz.impression +=1;
+    await quiz.save();
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+})
 router.get("/analytics/:userId/:quizId", authenticate, async (req, res) => {
   try {
     const { userId, quizId } = req.params;
