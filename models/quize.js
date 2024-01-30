@@ -26,18 +26,7 @@ const quizSchema = new mongoose.Schema({
     impression: { type: Number, default: 0 },
     questions: [questionSchema],
     quizType: { type: String, enum: ['q&a', 'poll']},
-    submissions: [
-        {
-            userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-            answers: [
-                {
-                    questionId: { type: mongoose.Schema.Types.ObjectId },
-                    selectedOption: String,
-                },
-            ],
-            score: Number,
-        },
-    ],
+    
 });
 
 const Quiz = mongoose.model('Quizzes', quizSchema);
