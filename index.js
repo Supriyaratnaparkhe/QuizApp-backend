@@ -10,7 +10,13 @@ const cors = require('cors');
 const app = express();
 
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(cors(
+    {
+        origin:["https://quizze-app-supriya.netlify.app"],
+        methods:["POST","GET","PUT"],
+        credentials:true
+    }
+));
 app.use(bodyParser.json({ limit: '10mb' }))
 
 app.set('view engine', 'ejs');
