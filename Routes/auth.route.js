@@ -6,12 +6,10 @@ dotenv.config();
 const router = express.Router();
 const User = require('../models/user');
 
-// Error handler
 const errorhandler = (res, error) => {
     res.status(error.status || 500).json({ error: "Something went wrong! Please try after some time." });
 };
 
-//  Api to Register new user
 router.post('/register', async (req, res) => {
     try {
         const { name, email, password, confirmpassword } = req.body;
@@ -22,7 +20,6 @@ router.post('/register', async (req, res) => {
             return res.status(400).json({ error: 'Password does not match' })
         }
 
-        // Check for duplicate email
         const existingUser = await User.findOne({ email })
         if (existingUser) {
             return res.status(400).json({ error: 'User with this email already exists.' });
@@ -51,7 +48,7 @@ router.post('/login', async (req, res) => {
         if (!email || !password) {
             return res.status(400).json({ error: 'Email and password are required' })
         }
-        //find user by email
+ 
         const user = await User.findOne({ email });
         if (user) {
             let hasPasswordMatched = await bcrypt.compare(password, user.password);
