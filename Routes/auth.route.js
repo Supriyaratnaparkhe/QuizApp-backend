@@ -6,7 +6,6 @@ dotenv.config();
 const router = express.Router();
 const User = require('../models/user');
 
-
 // Error handler
 const errorhandler = (res, error) => {
     res.status(error.status || 500).json({ error: "Something went wrong! Please try after some time." });
